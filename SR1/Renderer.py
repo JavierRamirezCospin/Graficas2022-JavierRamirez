@@ -45,8 +45,7 @@ class Renderer(object):
         self.clear_color = Color(r,g,b)
 
     # Function for Clearing image
-    # r, g, b must be normalized (0.0 - 1.0)
-    def glClear(self,r=0,g=0,b=0)->None:
+    def glClear(self)->None:
         self.framebuffer = [[self.clear_color for x in range(self.width)]
                             for y in range(self.height)]
 
