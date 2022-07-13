@@ -4,9 +4,10 @@
 from Renderer import Renderer
 import random
 
-rend = Renderer(1024,512)
+rend = Renderer(512,512)
 rend.glClear()
 # Temporal function to create random points on image
-for x in range(1000):
-    rend.glVertex(random.randrange(0,1024),random.randrange(0,512))
+for x in range(2000):
+    rend.glColor(1.0,1.0,random.uniform(0.6,1.0))
+    rend.glVertex(random.randrange(0,512),random.randrange(0,512))
 rend.glFinish('example.bmp')
