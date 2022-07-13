@@ -16,7 +16,6 @@ class Renderer(object):
         self.start = timer()
         self.clear_color = Color(0.0,0.0,0.0)
         self.p_color = Color(1.0,1.0,1.0)
-        self.hasVP = False
 
     # Function used to define image
     def glCreateWindow(self,width,height)->None:
@@ -31,7 +30,6 @@ class Renderer(object):
 
     # Function used to define viewport
     def glViewPort(self,x,y,width,height)->None:
-        self.hasVP = True
         self.vp_x = x
         self.vp_y = y
         self.vp_w = width
@@ -45,7 +43,9 @@ class Renderer(object):
     # Function for clearing image WITH viewport
     # r, g, b must be normalized (0.0 - 1.0)
     def glClearVP(self,r=1.0,g=1.0,b=1.0)->None:
-        pass
+        for x in range(self.vp_x,self.vp_x+self.vp_w):
+            for y in range(self.vp_y,self.vp_y+self.vp_h):
+                self.glVertex(x,y)
 
     # Function to set pixel colors
     # r, g, b must be normalized (0.0 - 1.0)
@@ -62,9 +62,11 @@ class Renderer(object):
 
     # Function to draw pixel WITH viewport
     # x, y must be normalized (-1.0 - 1.0)
-    def glVertexVP(self,x,y)->None:
-        if (-1 < x < 1) or (-1 < y < 1): return
-        pass
+    def glVertexVP(self,posX,posY)->None:
+        if (-1 > posX > 1) or (-1 > posY > 1): return
+        x = int((posX+1)*(self.vp_w/2) + self.vp_x)
+        y = int((posY+1)*(self.vp_h/2) + self.vp_y)
+        self.glVertex(x,y)
 
     # Function to Show compilation time
     def ShowTime(self):
