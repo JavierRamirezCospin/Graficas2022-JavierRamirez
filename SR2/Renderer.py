@@ -2,7 +2,7 @@
 # Class used for creating bmp images
 
 from timeit import default_timer as timer
-from Utils import char, word, dword, Color, Clamp
+from Utils import char, word, dword, Color
 
 # Class used for rendering images
 class Renderer(object):

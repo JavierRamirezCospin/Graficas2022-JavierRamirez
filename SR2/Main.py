@@ -8,40 +8,19 @@ import random
 rend = Renderer(512,512)
 rend.glClear()
 # Temporal function to create random points on image
-for k in range(200):
-    rend.glVertex(random.randrange(512),random.randrange(512))
+for k in range(8):
+    prob = random.randrange(0,3)
+    if prob == 0: rend.glColor(1.0,0.0,0.0)
+    elif prob == 1: rend.glColor(0.0,1.0,0.0)
+    elif prob == 2: rend.glColor(0.0,0.0,1.0)
+    p1_x = random.randrange(0,512)
+    p1_y = random.randrange(0,512)
+    p2_x = random.randrange(0,512)
+    p2_y = random.randrange(0,512)
+    p3_x = random.randrange(0,512)
+    p3_y = random.randrange(0,512)
+    rend.glLine(p1_x,p1_y,p2_x,p2_y)
+    rend.glLine(p2_x,p2_y,p3_x,p3_y)
+    rend.glLine(p1_x,p1_y,p3_x,p3_y)
 
-for k in range(100):
-    r0 = random.randrange(10,60)
-    r1 = random.randrange(int(r0*2.0),int(r0*20))
-    angle = random.randrange(0,361)
-    x0 = int(r0*sin(angle))+256
-    y0 = int(r0*cos(angle))+256
-    x1 = int(r1*sin(angle))+256
-    y1 = int(r1*cos(angle))+256
-    rend.glColor(0.0,0.0,1.0)
-    rend.glLine(x0,y0,x1,y1)
-
-for k in range(150):
-    r0 = random.randrange(13,60)
-    r1 = random.randrange(int(r0*2.0),int(r0*20))
-    angle = random.randrange(0,361)
-    x0 = int(r0*sin(angle))+256
-    y0 = int(r0*cos(angle))+256
-    x1 = int(r1*sin(angle))+256
-    y1 = int(r1*cos(angle))+256
-    rend.glColor(0.0,0.67,1.0)
-    rend.glLine(x0,y0,x1,y1)
-
-for k in range(150):
-    r0 = random.randrange(13,60)
-    r1 = random.randrange(int(r0*2.0),int(r0*20))
-    angle = random.randrange(0,361)
-    x0 = int(r0*sin(angle))+256
-    y0 = int(r0*cos(angle))+256
-    x1 = int(r1*sin(angle))+256
-    y1 = int(r1*cos(angle))+256
-    rend.glColor(1.0,1.0,1.0)
-    rend.glLine(x0,y0,x1,y1)
-
-rend.glFinish('example.bmp')
+rend.glFinish('example2.bmp')
