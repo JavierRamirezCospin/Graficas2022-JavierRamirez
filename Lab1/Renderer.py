@@ -16,6 +16,7 @@ class Renderer(object):
         self.start = timer()
         self.clear_color = Color(0.0,0.0,0.0)
         self.p_color = Color(1.0,1.0,1.0)
+        self.dpixels = []
 
     # Function used to define image
     def glCreateWindow(self,width,height)->None:
@@ -80,8 +81,12 @@ class Renderer(object):
         m = abs(y1 - y0) / abs(x1 - x0)
         y = y0
         for x in range(x0,x1+1):
-            if steep: self.glVertex(y,x)
-            else: self.glVertex(x,y)
+            if steep: 
+                self.glVertex(y,x)
+                self.dpixels.append((y,x))
+            else: 
+                self.glVertex(x,y)
+                self.dpixels.append((x,y))
             offset += m
             if offset >= limit:
                 if y0 < y1: y += 1
@@ -90,10 +95,26 @@ class Renderer(object):
 
     # Function used to draw outlines of polygon
     def glDrawPolygon(self,vertices):
+        self.poly = vertices
+        self.dpixels = []
         for v in range(len(vertices)):
             start = vertices[v]
             final = vertices[(v+1) % len(vertices)]
             self.glLine(start[0],start[1],final[0],final[1])
+
+    def glFillPolygon(self):
+        x_min, y_min = self.width, self.height
+        x_max, y_max = 0, 0
+        for x in range(len(self.poly)):
+            if self.poly[x][0] < x_min: x_min = self.poly[x][0]
+            if self.poly[x][0] > x_max: x_max = self.poly[x][0]
+            if self.poly[x][1] < y_min: y_min = self.poly[x][1]
+            if self.poly[x][1] > y_max: y_max = self.poly[x][1]
+        for y in range(y_min,y_max):
+            verts = [self.dpixels[k] for k in range(len(self.dpixels))
+                    if self.dpixels[k][1] == y]
+            for x in range(x_min,x_max):
+                if verts[0][0] < x < verts[1][0]: self.glVertex(x,y)
 
     # Function to Show compilation time
     def ShowTime(self):
